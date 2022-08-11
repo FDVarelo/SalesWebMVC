@@ -22,6 +22,7 @@ namespace SalesWebMvc.Services
 
         public void Insert(Seller obj)
         {
+            obj.Department = _context.Department.First(); // Previnir que não ocorra erro quando criado um novo seller
             _context.Add(obj);
             _context.SaveChanges();
         }
