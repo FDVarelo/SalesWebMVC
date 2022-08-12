@@ -24,11 +24,11 @@ namespace SalesWebMvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var list = await _sellerService.FindAllAsync();
+            var list = await _sellerService.FindAllAsync(); // Initial page of sellers containing all the sellers (Get all)
             return View(list);
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> Create() // Get create
         {
             var departments = await _departmentService.FindAllAsync();
             var viewModel = new SellerFormViewModel { Departments = departments };
@@ -37,7 +37,7 @@ namespace SalesWebMvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Seller seller)
+        public async Task<IActionResult> Create(Seller seller) // Post create
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +49,7 @@ namespace SalesWebMvc.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Delete(int? id) // Tela de delete
+        public async Task<IActionResult> Delete(int? id) // Get delete
         {
             if (id == null)
             {
@@ -67,7 +67,7 @@ namespace SalesWebMvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id) // Realmente deleta
+        public async Task<IActionResult> Delete(int id) // Post delete
         {
             try
             {
@@ -80,7 +80,7 @@ namespace SalesWebMvc.Controllers
             }
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id) // Get details
         {
             if (id == null)
             {
@@ -96,7 +96,7 @@ namespace SalesWebMvc.Controllers
             return View(obj);
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id) // Get edit
         {
             if (id == null)
             {
@@ -116,7 +116,7 @@ namespace SalesWebMvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, Seller seller)
+        public async Task<IActionResult> Edit(int? id, Seller seller) // Post edit
         {
             if (!ModelState.IsValid)
             {
@@ -124,7 +124,7 @@ namespace SalesWebMvc.Controllers
                 var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
                 return View(viewModel);
             }
-            if (id != seller.Id)
+            if (id != seller.Id) // If the id that is going to edit now, is not the one that was chosen initialy
             {
                 return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
             }
@@ -140,12 +140,12 @@ namespace SalesWebMvc.Controllers
             }
         }
 
-        public IActionResult Error(string message)
+        public IActionResult Error(string message) // Error message
         {
             var viewModel = new ErrorViewModel
             {
                 Message = message,
-                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier // Pegar o Id interno da requisição
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier // Get the Id of the request
             };
             return View(viewModel);
         }

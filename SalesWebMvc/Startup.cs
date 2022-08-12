@@ -43,6 +43,7 @@ namespace SalesWebMvc
             services.AddDbContext<SalesWebMvcContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"), builder => builder.MigrationsAssembly("SalesWebMvc")));
 
+            // All services added
             services.AddScoped<SeedingService>();
             services.AddScoped<SellerService>();
             services.AddScoped<DepartmentService>();
@@ -52,7 +53,8 @@ namespace SalesWebMvc
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
-            // Localização
+            // Localization, this interferes with Currency, insted of being R$ 20,00 is going to be $ 20.00
+            // and others things can be interfered too
             var enUS = new CultureInfo("en-US");
             var localizationOptions = new RequestLocalizationOptions
             {

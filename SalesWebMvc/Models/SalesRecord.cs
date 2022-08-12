@@ -8,10 +8,10 @@ namespace SalesWebMvc.Models
     {
         public int Id { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")] // Format of the Date
         public DateTime Date { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:F2}")]
+        [DisplayFormat(DataFormatString = "{0:F2}")] // Format of the Amount, example: (10.00)
         public double Amount { get; set; }
 
         public SaleStatus Status { get; set; }
