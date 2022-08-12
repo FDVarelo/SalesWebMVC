@@ -16,7 +16,7 @@ namespace SalesWebMvc.Services
             _context = context;
         }
 
-        public List<SalesRecord> FindByDate(DateTime? minDate, DateTime? maxDate)
+        public async Task<List<SalesRecord>> FindByDateAsync(DateTime? minDate, DateTime? maxDate)
         {
             var result = from obj in _context.SalesRecord select obj;
             if (minDate.HasValue)
@@ -27,7 +27,7 @@ namespace SalesWebMvc.Services
             {
                 result = result.Where(x => x.Date <= maxDate.Value);
             }
-            return result.Include(x => x.Seller).Include(x => x.Seller.Department).OrderByDescending(x => x.Date).ToList();
+            return await result.Include(x => x.Seller).Include(x => x.Seller.Department).OrderByDescending(x => x.Date).ToListAsync();
         }
     }
 }

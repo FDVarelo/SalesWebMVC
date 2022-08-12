@@ -19,7 +19,7 @@ namespace SalesWebMvc.Controllers
             return View();
         }
 
-        public IActionResult SimpleSearch(DateTime? minDate, DateTime? maxDate)
+        public async Task<IActionResult> SimpleSearch(DateTime? minDate, DateTime? maxDate)
         {
             if (!minDate.HasValue)
             {
@@ -31,7 +31,7 @@ namespace SalesWebMvc.Controllers
             }
             ViewData["minDate"] = minDate.Value.ToString("yyyy-MM-dd");
             ViewData["maxDate"] = maxDate.Value.ToString("yyyy-MM-dd");
-            var result = _salesRecordService.FindByDate(minDate, maxDate);
+            var result = await _salesRecordService.FindByDateAsync(minDate, maxDate);
             return View(result);
         }
 
